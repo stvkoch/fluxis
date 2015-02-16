@@ -30,10 +30,6 @@ describe('Test how fluxis flow actions to stores.', function(){
         callbackDoSomething.reset();
     });
 
-    after(function(){
-      // store.unlisten(callbackDoSomething);
-    })
-
     it('callbackDoSomething should called Once', function () {
       action.doSomething();
       callbackDoSomething.should.have.been.calledOnce;

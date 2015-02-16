@@ -29,7 +29,7 @@ var stateExpected2  = {hello:'world', foo:'bar', twice:true};
 
 
 describe('Test how fluxis flow actions with arguments to stores when listeners using selector.', function(){
-  describe('Callbacks to be a registereds on event machine using aditional selectores', function(){
+  describe('Registering callbacks with adicional selector on event machine', function(){
 
     store.listen(callbackGeneral);
     store.listen(callbackSelectorA, 'selectA');
@@ -56,7 +56,8 @@ describe('Test how fluxis flow actions with arguments to stores when listeners u
       callbackSelectorB.should.have.been.callCount(0);
     });
 
-    it('using selector A', function () {
+
+    it('using selector A. To flow action to store and propagate to listerner A and general', function () {
       //this is a example, maybe you like use id of record?
       action.doWithSelector({selector:'selectA',data:stateExpected2});
       callbackGeneral.should.have.been.callCount(3);
@@ -68,7 +69,7 @@ describe('Test how fluxis flow actions with arguments to stores when listeners u
       store.getState().data.should.be.equal(stateExpected2);
     });
 
-    it('using selector B', function () {
+    it('using selector B. Note that general allways is called selector not affect him. ', function () {
       action.doWithSelector({selector:'selectB',data:stateExpected1});
       callbackGeneral.should.have.been.callCount(4);
       callbackSelectorA.should.have.been.callCount(1);
@@ -79,10 +80,13 @@ describe('Test how fluxis flow actions with arguments to stores when listeners u
       store.getState().data.should.be.equal(stateExpected1);
     });
 
-    it('unlisteners all', function () {
+    it('unlisteners all and trigger actions, nothings shoulb be propagate', function () {
       store.unlisten(callbackGeneral);
       store.unlisten(callbackSelectorA, 'selectA');
       store.unlisten(callbackSelectorB, 'selectB');
+      action.doWithSelector({selector:'selectA',data:stateExpected2});
+      action.doWithSelector({selector:'selectB',data:stateExpected2});
+      action.doWithSelector();
       callbackGeneral.should.have.been.callCount(4);
       callbackSelectorA.should.have.been.callCount(1);
       callbackSelectorB.should.have.been.callCount(1);
