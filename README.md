@@ -8,7 +8,7 @@ VIEW -> ACTION -> STORE -> VIEW,...
 
 This implementation is inpirate on ALT.js, but with selector listeners.
 
-This is useful when you have multiples components for the same stores.
+This is useful when you have multiples components for the same store.
 
 
 The follow codes are extracted from tests of this module:
