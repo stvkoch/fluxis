@@ -1,4 +1,4 @@
-[Travis-ci test](https://travis-ci.org/stvkoch/fluxis.svg)
+![Travis-ci test](https://travis-ci.org/stvkoch/fluxis.svg)
 
 # fluxis
 Tiny flux architecture implementation. Simple, but very power flux implementation.
