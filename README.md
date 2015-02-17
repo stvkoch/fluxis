@@ -10,20 +10,18 @@ Tiny flux architecture implementation. Simple, but very power flux implementatio
 This implementation is inpirate on ALT.js, but with selector listeners.
 
 
-This is useful when you have multiples components for the same store. Becareful when using multiples components with one store. Selector is useful when you want a component to react to update the states of a store, but without needing affect all components connected to this store. In some cases it is useful, but in other adds a simplicity that many developers try find but that can break the architecture of your application. This component is not designed to be used with React, but running perfectly. React uses immutable values to represent the component states and its associated sub-components. It is good to have this in mind, when you draw hierarchy of your components because React takes advantage of immutability mechanism of state of virtual DOM to extract only the difference between the current state and the changes of fast way, it makes the selector in some cases does not make sense but in other makes. In some cases you do not want the main component change their status to reflect a change in state of a sub-component. Again, evaluate if it is not preferable to have two states/store one to represent the hierarchy and another to represent the state can be changed.
+This is useful when you have multiples components listening same store. Becareful when using multiples components with one store. Selector is useful when you want a component to react to update the states of a store, but without needing affect all components connected to this store. In some cases it is useful, but in other adds a simplicity that many developers try find, but that can break the architecture of your application. This component is not designed to be used with React, but running perfectly. React uses immutable values to represent the component states and its associated sub-components. It's good to have this in mind when you draw hierarchy of your components, because React takes advantage of immutability mechanism the state of virtual DOM to extract only the difference between the current state and the changes on fast way, it makes the selector in some cases does not make sense but in other makes. In some cases you do not want the main component change their status to reflect a change in state of a sub-component. Again, evaluate if it is not preferable to have two states/store one to represent the hierarchy and another to represent the state can be changed.
 
 
 This library has small paylod and are fully tested.
 
 
 
-
 The follow codes are extracted from tests folder:
 
 
-
     'use strict()';
-    var Fluxis = require('../../src/index.js');
+    var Fluxis = require('fluxis');
 
     //create Action
     var Action = function Action() {
@@ -43,7 +41,7 @@ The follow codes are extracted from tests folder:
         this.data = data;
       },
       doAsyncSomething: function(){
-        //sweet, if you add loading flag like appAction.wait() and in you propagate appAction.wakeup()
+        //sweet, if you add loading flag like appAction.wait() and in your propagate method you can use appAction.wakeup()
         var promise = $fetchFromService('operation', arguments);
         promise.then(action.propagate);
 
@@ -70,6 +68,7 @@ The follow codes are extracted from tests folder:
     store.listen(callbackSelectorB, 'selectB');
 
 
+
 #Install:
 
     npm install fluxis --save
@@ -81,6 +80,9 @@ run tests:
 
     npm test
 
+  or
+
+    mocha ./tests
 
 
   
