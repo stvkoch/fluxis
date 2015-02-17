@@ -2,24 +2,32 @@
 Tiny flux architecture implementation. Simple, but very power flux implementation.
 
 
-ACTION -> STORE -> VIEW
-VIEW -> ACTION -> STORE -> VIEW,...
+    ACTION -> STORE -> VIEW
+    VIEW -> ACTION -> STORE -> VIEW, ...
+
 
 
 This implementation is inpirate on ALT.js, but with selector listeners.
 
-This is useful when you have multiples components for the same store.
+
+This is useful when you have multiples components for the same store. Becareful when using multiples components with one store. Selector is useful when you want a component to react to update the states of a store, but without needing affect all components connected to this store. In some cases it is useful, but in other adds a simplicity that many developers try find but that can break the architecture of your application. This component is not designed to be used with React, but running perfectly. React uses immutable values to represent the component states and its associated sub-components. It is good to have this in mind, when you draw hierarchy of your components because React takes advantage of immutability mechanism of state of virtual DOM to extract only the difference between the current state and the changes of fast way, it makes the selector in some cases does not make sense but in other makes. In some cases you do not want the main component change their status to reflect a change in state of a sub-component. Again, evaluate if it is not preferable to have two states/store one to represent the hierarchy and another to represent the state can be changed.
 
 
-The follow codes are extracted from tests of this module:
+This library has small paylod and are fully tested.
+
+
+
+
+The follow codes are extracted from tests folder:
 
 
 
     'use strict()';
     var Fluxis = require('../../src/index.js');
+
     //create Action
     var Action = function Action() {
-      this.generateActions('doSomething', 'doWithArgs', 'doWithSelector');
+      this.generateActions('propagate', 'doAsyncSomething', 'doSomething', 'doWithArgs', 'doWithSelector');
     };
     module.exports = Fluxis.createActions(Action);
 
@@ -27,10 +35,20 @@ The follow codes are extracted from tests of this module:
     //create Store
     var Store = function Store() {
       this.bindActions(action);
-      this.data = state.initialState;
+      this.data = {};
     };
     //build your logical store
     Store.prototype = {
+      propagate: function(data){
+        this.data = data;
+      },
+      doAsyncSomething: function(){
+        //sweet, if you add loading flag like appAction.wait() and in you propagate appAction.wakeup()
+        var promise = $fetchFromService('operation', arguments);
+        promise.then(action.propagate);
+
+        return false;//not propagate 
+      },
       doSomething: function(args) {
         this.data = state.STATE_DO_SOMETHING;
       },
@@ -41,7 +59,7 @@ The follow codes are extracted from tests of this module:
       doWithSelector: function(args) {
         args = args || {};
         this.data = args.data||{};
-        return args.selector||''; //only 'dispatch to listens that expect selector' see Config object
+        return args.selector||''; //only 'dispatch to listerns that expect selector'
       }
       
     };

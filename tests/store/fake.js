@@ -27,6 +27,19 @@ Store.prototype = {
     args = args || {};
     this.data = args.data||{};
     return args.selector||''; //only 'dispatch to listens that expect selector' see Config object
+  },
+
+  propagate: function(args){
+    this.data = args.data;
+    args.callback();
+    args.testPropagate();
+  },
+
+  doAsync: function(data){
+    setTimeout(function(){
+      action.propagate(data);
+    },500);
+    return false;//not propagate
   }
 
 };
