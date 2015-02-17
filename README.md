@@ -1,13 +1,17 @@
 # fluxis
-Tiny flux architecture implementation
+Tiny flux architecture implementation. Simple, but very power flux implementation.
 
 
-This implementation is inpirate on ALT.js, but this selector listeners.
+ACTION -> STORE -> VIEW
+VIEW -> ACTION -> STORE -> VIEW,...
 
-This is useful when you have multiples components for the same stores.
+
+This implementation is inpirate on ALT.js, but with selector listeners.
+
+This is useful when you have multiples components for the same store.
 
 
-This codes extracted from tests:
+The follow codes are extracted from tests of this module:
 
 
 
@@ -46,9 +50,19 @@ This codes extracted from tests:
     store.listen(callbackGeneral);
     store.listen(callbackSelectorA, 'selectA');
     store.listen(callbackSelectorB, 'selectB');
-  
 
 
-See there for more details.
+#Install:
+
+    npm install fluxis --save
+
+
+See test folder for more details of implementation.
+
+run tests:
+
+    npm test
+
+
 
   
