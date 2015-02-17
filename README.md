@@ -1,3 +1,5 @@
+[Travis-ci test](https://travis-ci.org/stvkoch/fluxis.svg)
+
 # fluxis
 Tiny flux architecture implementation. Simple, but very power flux implementation.
 
@@ -10,7 +12,7 @@ Tiny flux architecture implementation. Simple, but very power flux implementatio
 This implementation is inpirate on ALT.js, but with selector listeners.
 
 
-This is useful when you have multiples components listening same store. Becareful when using multiples components with one store. Selector is useful when you want a component to react to update the states of a store, but without needing affect all components connected to this store. In some cases it is useful, but in other adds a simplicity that many developers try find, but that can break the architecture of your application. This component is not designed to be used with React, but running perfectly. React uses immutable values to represent the component states and its associated sub-components. It's good to have this in mind when you draw hierarchy of your components, because React takes advantage of immutability mechanism the state of virtual DOM to extract only the difference between the current state and the changes on fast way, it makes the selector in some cases does not make sense but in other makes. In some cases you do not want the main component change their status to reflect a change in state of a sub-component. Again, evaluate if it is not preferable to have two states/store one to represent the hierarchy and another to represent the state can be changed.
+Selector listeners is useful when you have multiples components listening same store, and someway not want that store dispatch changes to all components. Becareful when using multiples components with one store. Selector is useful when you want a component to react to changes of store states without needing affect all components connected to this store. In some cases it is useful, but in other, adds this simplicity that many developers try find, can break the flux architecture of your application. This component is not designed to be used with React, but running perfectly together. React uses immutable values to represent the component states and its associated sub-components. It's good to have this in your mind when draw hierarchy of your components, because React takes advantage of immutability mechanism the state of virtual DOM to extract only the difference between the current state and the changes on fast way, it makes the selector in some cases does not make sense but in other makes. In some cases, you do not want the main component change their status to reflect a change in state of a sub-component. Again, evaluate if, it is not preferable, to have two states/store instead of one. One to represent the hierarchy and another to represent the state can be changed.
 
 
 This library has small paylod and are fully tested.
