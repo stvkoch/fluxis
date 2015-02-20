@@ -8,7 +8,7 @@ Tiny flux architecture implementation. Simple, but very power flux implementatio
     VIEW -> ACTION -> STORE -> VIEW, ...
 
 
-What is a diffences between another implementations?
+Difference between others implementations?
 
   - Small payload, ideal for mobile implementations.
   - Simple, fast and powerfull
