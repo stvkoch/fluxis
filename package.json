@@ -1,5 +1,5 @@
 {
-  "name": "Fluxis",
+  "name": "fluxis",
   "version": "0.0.1",
   "description": "Tiny implementation of flux architecture",
   "main": "src/index.js",

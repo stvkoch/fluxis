@@ -37,20 +37,12 @@ action.doWithArgs('hello', world);
 
 var ACTION_LISTENER = ("_LISTENERS");
 
-var Fluxis = function(){};
-
-Fluxis.prototype.createActions = function(action){
-    function Action(){
-        this[ACTION_LISTENER] = {};
-        action.call(this);
-    }
-
-    Action.prototype._listener = function(StoreModel){
+function Action(action){
+    this._listener = function(StoreModel){
         var key = StoreModel.constructor.name || StoreModel.displayName || StoreModel.name;
         this[ACTION_LISTENER][key] = StoreModel;
-    }
-
-    Action.prototype.generateActions = function(){
+    };
+    this.generateActions = function(){
         var methods = arguments || [];
         var self = this;
         for (var i in methods) {
@@ -74,36 +66,48 @@ Fluxis.prototype.createActions = function(action){
                 self[method] = _makeTriggeredActionCall(method);
             }
         }
-    }
-    var actionClass = new Action();
+    };
+
+    this[ACTION_LISTENER] = {};
+    action.call(this);
+};
+
+
+
+function Store(store){
+    this.bindActions = function(action){
+        action._listener(this);
+    };
+    this.listen = function(callback, aditionalSelector){
+        aditionalSelector = aditionalSelector || '';
+        this.on('change'+aditionalSelector, callback);
+    };
+    this.unlisten = function(callback, aditionalSelector){
+        aditionalSelector = aditionalSelector || '';
+        this.off('change'+aditionalSelector, callback);
+    };
+    this.getState = function(){
+        return this;
+    };
+
+    store.call(this);
+    return this;
+}
+
+
+
+
+var Fluxis = function(){};
+
+Fluxis.prototype.createActions = function(action){
+    var actionClass = new Action(action);
     return actionClass;
 }
 
 Fluxis.prototype.createStore = function(StoreModel){
-    function Store(){
-        this.bindActions = function(action){
-            action._listener(this);
-        },
-        this.listen = function(callback, aditionalSelector){
-            aditionalSelector = aditionalSelector || '';
-            this.on('change'+aditionalSelector, callback);
-        },
-        this.unlisten = function(callback, aditionalSelector){
-            aditionalSelector = aditionalSelector || '';
-            this.off('change'+aditionalSelector, callback);
-        },
-        this.getState = function(){
-            return this;
-        }
-        StoreModel.call(this);
-        return this;
-    }
     Store.prototype = StoreModel.prototype;
-
-    var storeClass = new Store();
-    
+    var storeClass = new Store(StoreModel);
     this.observable(storeClass);
-
     return storeClass;
 }
 

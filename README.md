@@ -8,6 +8,15 @@ Tiny flux architecture implementation. Simple, but very power flux implementatio
     VIEW -> ACTION -> STORE -> VIEW, ...
 
 
+What is a diffences between another implementations?
+
+  - Small payload, ideal for mobile implementations.
+  - Simple, fast and powerfull
+  - Allow multiples components listing same store using selectors.
+  - Allow multiples dispacth in same action or store.
+  - Easy way for create your stores and actions, and with some organization you can turn stores implementation agnostic of a flux library implementation.
+  - Fully interface tests.
+
 
 This implementation is inpirate on ALT.js, but with selector listeners.
 
