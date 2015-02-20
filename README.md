@@ -12,16 +12,18 @@ What is a diffences between another implementations?
 
   - Small payload, ideal for mobile implementations.
   - Simple, fast and powerfull
-  - Allow multiples components listing same store using selectors.
-  - Allow multiples dispacth in same action or store.
-  - Easy way for create your stores and actions, and with some organization you can turn stores implementation agnostic of a flux library implementation.
+  - Allow multiples components listen same store using selectors.
+  - Allow one action dispatch a multiples stores.
+  - Easy way to create your stores and actions.
   - Fully interface tests.
 
 
-This implementation is inpirate on ALT.js, but with selector listeners.
+This implementation is inpirate on ALT.js, but with small payload and selector listeners.
 
 
-Selector listeners is useful when you have multiples components listening same store, in some cases you not want that store dispatch changes to all components. Becareful when using multiples components with one store. Selector is useful when you want a component to react to changes of store states without needing affect all components connected to this store. In some cases it is useful, but in other, adds this simplicity that many developers try find, can break the flux architecture of your application. This component is not designed to be used with React, but running perfectly together. React uses immutable values to represent the component states and its associated sub-components. It's good to have this in your mind when draw hierarchy of your components, because React takes advantage of immutability mechanism the state of virtual DOM to extract only the difference between the current state and the changes on fast way, it makes the selector, in some cases, does not make sense but in other makes. In some cases, you do not want the main component propagate your changes to own sub-component. Again, evaluate if, it is not preferable, to have two states/store instead of one. One to represent the hierarchy and another to represent the state can be changed. Otherwise Fluxis is very simple implementation, run well with async methods and it's easy build your flux architecture.
+Selector listener is useful when you have multiples components listening same store, in some cases you not want that store dispatch changes to all components. 
+
+Be careful when using multiples components with one store. Selector is useful when you want a component to react to changes of store states without needing affect all components connected to this store. In some cases it is useful, but in other, adds this simplicity that many developers try find, can break the flux architecture of your application. React uses immutable values to represent the component states and its associated sub-components. It's good to have this in your mind when draw hierarchy of your components, because React takes advantage of immutability mechanism the state of virtual DOM to extract only the difference between the current state and the changes on fast way, it makes the selector, in some cases, does not make sense but in other makes. In some cases, you do not want the main component propagate your changes to own sub-component. Again, evaluate if, it is not preferable, to have two states/store instead of one. One to represent the hierarchy and another to represent the state can be changed. Otherwise Fluxis is very simple implementation, run well with async methods and it's easy build your flux architecture.
 
 
 This library has small paylod and are fully tested.

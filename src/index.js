@@ -1,70 +1,33 @@
-/**
-Simple
-function assert(condition, message) {
-    if (!condition) 
-        console.error("FAIL: ", message)
-    else
-    
-
-}
-class Action{
-    constructor(){
-        this.generateActions('doSomething', 'doWithArgs');
-    }
-}
-var action = Fluxis.createActions(Action);
-
-
-class Store{
-    constructor(){
-        this.bindAction(action);
-    }
-    doSomething(){
-    
-    }
-    doWithArgs(){
-    
-    }
-}
-
-var store = Fluxis.createStore(Store);
-action.doSomething();
-action.doWithArgs('hello', world);
-
-*/
-
-// var riot = require('riot');
 
 var ACTION_LISTENER = ("_LISTENERS");
 
 function Action(action){
     this._listener = function(StoreModel){
-        var key = StoreModel.constructor.name || StoreModel.displayName || StoreModel.name;
+        var key = StoreModel.constructor.name || StoreModel.displayName || StoreModel.name || this[ACTION_LISTENER].length;
         this[ACTION_LISTENER][key] = StoreModel;
     };
     this.generateActions = function(){
         var methods = arguments || [];
         var self = this;
+        //create action method that trigger 
         for (var i in methods) {
-            if (methods.hasOwnProperty(i)) {
-                var method = methods[i];
-                var _makeTriggeredActionCall = function(method){
-                    //@TODO REFACT
-                    return function(){
-                        for (var ii in self[ACTION_LISTENER]) {
-                            if (self[ACTION_LISTENER].hasOwnProperty(ii) && self[ACTION_LISTENER][ii][method]) {
-                                var r = self[ACTION_LISTENER][ii][method](arguments[0]);
-                                if(r !== false){
-                                    self[ACTION_LISTENER][ii].trigger('change');
-                                    if ((typeof r === 'string' || typeof r === 'number') && r !== '')
-                                        self[ACTION_LISTENER][ii].trigger('change'+r);
-                                }
+            var method = methods[i];
+            var _makeTriggeredActionCall = function(method){
+                //@TODO REFACT
+                return function(){
+                    for (var ii in self[ACTION_LISTENER]) {
+                        if (self[ACTION_LISTENER].hasOwnProperty(ii) && self[ACTION_LISTENER][ii][method]) {
+                            var r = self[ACTION_LISTENER][ii][method](arguments[0]);
+                            if(r !== false){
+                                self[ACTION_LISTENER][ii].trigger('change');
+                                if ((typeof r === 'string' || typeof r === 'number') && r !== '')
+                                    self[ACTION_LISTENER][ii].trigger('change'+r);
                             }
                         }
                     }
                 }
-                self[method] = _makeTriggeredActionCall(method);
             }
+            self[method] = _makeTriggeredActionCall(method);
         }
     };
 
