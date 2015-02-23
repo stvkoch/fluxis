@@ -38,6 +38,7 @@ The follow codes are extracted from tests folder:
 
     //create Action
     var Action = function Action() {
+      //fluxis generate methods that trigger event to stores
       this.generateActions('propagate', 'doAsyncSomething', 'doSomething', 'doWithArgs', 'doWithSelector');
     };
     module.exports = Fluxis.createActions(Action);
@@ -45,11 +46,14 @@ The follow codes are extracted from tests folder:
 
     //create Store
     var Store = function Store() {
+      //bind action for this store, you can bind multiples stores same action.
       this.bindActions(action);
+      //fluxis use own store for save state
       this.data = {};
     };
     //build your logical store
     Store.prototype = {
+      //fluxis allow dispatch multiples events
       propagate: function(data){
         this.data = data;
       },
