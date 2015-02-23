@@ -7,7 +7,7 @@
     "test": "mocha ./tests"
   },
   "keywords": [
-    "flux"
+    "flux", "react-component", "react", "riot", "router"
   ],
   "author": "Steven Koch",
   "devDependencies": {
